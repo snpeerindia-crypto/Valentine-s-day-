@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  overflow:hidden;
+  font-family:'Poppins', sans-serif;
+  background: linear-gradient(-45deg,#ff4e8b,#ff9ecf,#ffc1e3,#ff6fa5);
+  background-size:400% 400%;
+  animation:bg 12s ease infinite;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  color:white;
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.slide{
+  position:absolute;
+  width:90%;
+  max-width:750px;
+  opacity:0;
+  transform:scale(0.8);
+  transition:all 0.8s ease;
+}
+
+.active{
+  opacity:1;
+  transform:scale(1);
+}
+
+h1{
+  font-family:'Great Vibes', cursive;
+  font-size:4em;
+}
+
+h2{
+  line-height:1.6;
+  font-weight:400;
+}
+
+button{
+  padding:12px 28px;
+  margin:15px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  background:white;
+  color:#ff2e7a;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  background:#ff2e7a;
+  color:white;
+}
+
+.heart,.petal{
+  position:absolute;
+  font-size:20px;
+  animation:float 7s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:1;}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
+}
+
+.teddy{
+  font-size:120px;
+  animation:bounce 1s infinite alternate;
+}
+
+@keyframes bounce{
+  from{transform:translateY(0);}
+  to{transform:translateY(-20px);}
+}
+
+.ring{
+  font-size:100px;
+  animation:spin 3s linear infinite;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4b9c9c8d38.mp3?filename=romantic-love-112199.mp3">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<div class="slide active" id="slide1">
+<h1>Hi My Beautiful Wifey 💖</h1>
+<button onclick="start()">Click To Continue</button>
+</div>
+
+<div class="slide" id="slide2">
+<h2 id="typing"></h2>
+<button onclick="next(3)">Continue 💕</button>
+</div>
+
+<div class="slide" id="slide3">
+<div class="ring">💍</div>
+<h2>Babee will you be my Valentine? 💕</h2>
+<button onclick="yes()">Yes</button>
+<button onclick="no()">No</button>
+</div>
+
+<div class="slide" id="yesSlide">
+<div class="teddy">🧸🎁</div>
+<h2>I am enough for you ❤️<br>
+I am the gift from God... What else you need? 💝</h2>
+<button onclick="next(5)">Next ❤️</button>
+</div>
+
+<div class="slide" id="noSlide">
+<h2>😭 You can't do this to me... I am your babe 💔</h2>
+<button onclick="yes()">Okay Fine Yes 💖</button>
+</div>
+
+<div class="slide" id="slide5">
+<h2>
+I am really really sorry for everything I have done.<br>
+All I ever did was hurt you.<br>
+I failed to express my love.<br><br>
+But babee I really love you so much 💕<br><br>
+Please don't ever think of leaving me.<br>
+Whatever happens I am here for you.<br><br>
+Happy Valentine's Day my Valentine ❤️💋
+</h2>
+</div>
+
+<script>
+
+function start(){
+document.getElementById("music").play();
+next(2);
+typeText();
+}
+
+function next(num){
+document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+document.getElementById("slide"+num).classList.add('active');
+}
+
+function yes(){
+document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+document.getElementById("yesSlide").classList.add('active');
+fireworks();
+}
+
+function no(){
+document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
+document.getElementById("noSlide").classList.add('active');
+}
+
+function typeText(){
+let text="I need to ask you something very special... ✨";
+let i=0;
+let speed=50;
+function typing(){
+if(i<text.length){
+document.getElementById("typing").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,speed);
+}
+}
+typing();
+}
+
+/* Floating Hearts & Petals */
+setInterval(()=>{
+let el=document.createElement("div");
+el.className=Math.random()>0.5?"heart":"petal";
+el.innerHTML=Math.random()>0.5?"💖":"🌹";
+el.style.left=Math.random()*100+"vw";
+el.style.fontSize=(Math.random()*20+10)+"px";
+document.body.appendChild(el);
+setTimeout(()=>el.remove(),7000);
+},400);
+
+/* Fireworks */
+function fireworks(){
+let canvas=document.getElementById("fireworks");
+let ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+for(let i=0;i<100;i++){
+ctx.fillStyle="white";
+ctx.beginPath();
+ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,2,0,2*Math.PI);
+ctx.fill();
+}
+}
+
+</script>
+
+</body>
+</html>
